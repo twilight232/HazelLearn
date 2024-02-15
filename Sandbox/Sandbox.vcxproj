@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn;$(SolutionDir)HazelLearn\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,7 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn;$(SolutionDir)HazelLearn\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

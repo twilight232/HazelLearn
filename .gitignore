@@ -3,6 +3,7 @@
 .git/
 bin/
 bin-int/
+HazelLearn/vendor/
 
 
 # Files

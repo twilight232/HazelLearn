@@ -15,9 +15,11 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="Hazel.h" />
+    <ClInclude Include="Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Log.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -66,8 +68,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,8 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\spdlog\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
