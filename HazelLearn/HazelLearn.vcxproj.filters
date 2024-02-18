@@ -36,6 +36,21 @@
     <ClInclude Include="Log.h">
       <Filter>src\Hazel\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Events\Event.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ApplicationEvent.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvent.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\MouseEvent.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventAPI.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
