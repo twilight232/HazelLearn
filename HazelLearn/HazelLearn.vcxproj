@@ -11,20 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="EntryPoint.h" />
+    <ClInclude Include="src\Hazel\Application.h" />
+    <ClInclude Include="src\Hazel\Core.h" />
+    <ClInclude Include="src\Hazel\EntryPoint.h" />
     <ClInclude Include="Events\ApplicationEvent.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\EventAPI.h" />
     <ClInclude Include="Events\keyEvent.h" />
     <ClInclude Include="Events\MouseEvent.h" />
-    <ClInclude Include="Hazel.h" />
-    <ClInclude Include="Log.h" />
+    <ClInclude Include="src\Hazel.h" />
+    <ClInclude Include="src\Hazel\Log.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="src\Hazel\Application.cpp" />
+    <ClCompile Include="src\Hazel\Log.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

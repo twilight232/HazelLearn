@@ -3,15 +3,15 @@
 
 // For use by applications
 
-#include "Application.h"
+#include "Hazel/Application.h"
 #include <stdio.h>
-#include "Log.h"
+#include "Hazel/Log.h"
 
 
 
 
 //---------Entry Point----------------------------------
 
-#include "EntryPoint.h"
+#include "Hazel/EntryPoint.h"
 
 //------------------------------------------------------

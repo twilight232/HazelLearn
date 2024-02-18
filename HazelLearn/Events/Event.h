@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../Core.h"
+#include "../src/Hazel/Core.h"
 
 #include <string>
 #include <functional>
