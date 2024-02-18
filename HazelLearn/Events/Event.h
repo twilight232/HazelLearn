@@ -3,8 +3,8 @@
 
 #include "../src/Hazel/Core.h"
 
-#include <string>
-#include <functional>
+
+#include "../hzpch.h"
 
 namespace Hazel {
 

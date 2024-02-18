@@ -1,7 +1,9 @@
+#include "hzpch.h"
 #include "Application.h"
 #include "../../Events/EventAPI.h"
 #include "Log.h"
-#include <iostream>
+
+
 
 namespace Hazel {
 

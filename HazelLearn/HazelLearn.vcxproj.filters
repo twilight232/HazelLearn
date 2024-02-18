@@ -51,12 +51,18 @@
     <ClInclude Include="Events\EventAPI.h">
       <Filter>src\Hazel\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\hzpch.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hazel\Application.cpp">
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Hazel\Log.cpp">
+      <Filter>src\Hazel\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hzpch.cpp">
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
   </ItemGroup>
