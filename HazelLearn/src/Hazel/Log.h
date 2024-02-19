@@ -48,4 +48,3 @@ namespace Hazel {
 
 
 //if dist build
-#define HZ_CORE_INFO

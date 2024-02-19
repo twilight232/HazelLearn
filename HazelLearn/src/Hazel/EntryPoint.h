@@ -1,11 +1,12 @@
 #pragma once
 #include "Log.h"
+#include "Application.h"
 
 
 
 #ifdef HZ_PLATFORM_WINDOWS
 
-extern Hazel::Application* Hazel::CreateApplication();   //声明一个外部的函数，看上去像一个虚函数，准备调用模板类来应付那些奇奇怪怪的调用引擎的程序
+extern Hazel::Application* Hazel::CreateApplication();   
 
 int main(int argc,char** argv)
 {

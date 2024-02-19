@@ -3,6 +3,14 @@ path= HazelLearn/vendor/spdlog
 url=https://github.com/gabime/spdlog
 
 
+[submodule "HazelLearn/vendor/GLFW"]
+path= HazelLearn/vendor/GLFW
+url=https://github.com/glfw/glfw
+
+
+
+
+
 
 
 

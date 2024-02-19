@@ -6,6 +6,8 @@
 #include "Hazel/Application.h"
 #include <stdio.h>
 #include "Hazel/Log.h"
+#include "Platform/Windows/WindowsWindow.h"
+#include"Hazel/Window.h"
 
 
 
