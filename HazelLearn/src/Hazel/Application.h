@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Hazel/Events/Event.h"
+#include "Hazel/Events/EventAPI.h"
 
 #include "Window.h"
 
@@ -13,13 +14,13 @@ namespace Hazel {
 		Application();
 		 virtual ~Application();
 
-
 		void Run();
-
-		//To be define in Client           它不会在Application.cpp中实现，它会在包含这个头文件（包括间接包含）的客户端代码中进行实现
 		
+		void OnEvent(Event& e);
 
 	private:
+		bool OnWindowClose(WindowCloseEvent& e);
+
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 	

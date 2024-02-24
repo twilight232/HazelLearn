@@ -86,10 +86,11 @@ namespace Hazel {
 
 		}
 
+		//如果事件类型匹配，则调用传入的函数对象；即如果m_Event和T的类型符合，则执行传入的函数
 		template<typename T>
 		bool Dispatch(EventFn<T> func)  //传入一个函数对象
 		{
-			if (m_Event.GetEventType() == T::GetStaticType())   //如果事件类型匹配，则调用传入的函数对象；即如果m_Event和T的类型符合，下面直接强转指针类型
+			if (m_Event.GetEventType() == T::GetStaticType())   //如果事件类型匹配，则调用传入的函数对象；即如果m_Event和T的类型符合，则执行传入的函数
 			{
 				m_Event.m_Handled = func(*(T*)&m_Event);  //强转指针类型，然后调用函数，返回事件是否解决的bool值
 				return true;

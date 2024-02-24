@@ -11,9 +11,8 @@ extern Hazel::Application* Hazel::CreateApplication();
 int main(int argc,char** argv)
 {
 	Hazel::Log::Init();
-	HZ_CORE_WARN("Initialized Lod!");
-	int a = 9;
-	HZ_INFO("Hello! Var={0}", a);
+	HZ_CORE_WARN("Initialized Log!");
+	
 	
 
 
