@@ -1,26 +1,41 @@
 #include <Hazel.h>
 
+class ExampleLayer : public Hazel::Layer
+{
+public:
+	ExampleLayer()
+		: Layer("Example")
+	{
+	}
+
+	void OnUpdate() override
+	{
+		HZ_INFO("ExampleLayer::Update");
+	}
+
+	void OnEvent(Hazel::Event& event) override
+	{
+		HZ_TRACE("{0}", event);
+	}
+
+};
 
 class Sandbox : public Hazel::Application
 {
 public:
 	Sandbox()
 	{
+		PushLayer(new ExampleLayer());
+	}
 
-	};
 	~Sandbox()
 	{
 
-	};
-
-
-
-
-private:
+	}
 
 };
 
- Hazel::Application*  Hazel::CreateApplication()          //没有中间那个Application时这里一直报错，说Hazel命名空间下没有CreateApplication()
+Hazel::Application* Hazel::CreateApplication()
 {
 	return new Sandbox();
 }

@@ -57,8 +57,10 @@ namespace Hazel {
 	//这个类里的成员函数就是上面宏所定义的那些
 	class HAZEL_API Event
 	{
-		friend class EventDispatcher;
+		
 	public:
+		bool Handled = false;//事件是否解决
+
 		virtual EventType GetEventType() const = 0;   //纯虚函数啊
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -68,8 +70,7 @@ namespace Hazel {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;  //事件是否解决
+	
 	};
 
 
@@ -92,7 +93,7 @@ namespace Hazel {
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())   //如果事件类型匹配，则调用传入的函数对象；即如果m_Event和T的类型符合，则执行传入的函数
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);  //强转指针类型，然后调用函数，返回事件是否解决的bool值
+				m_Event.Handled = func(*(T*)&m_Event);  //强转指针类型，然后调用函数，返回事件是否解决的bool值
 				return true;
 			}
 			//事件类型不匹配，返回false

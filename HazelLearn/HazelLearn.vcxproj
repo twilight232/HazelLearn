@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Hazel\LayerStack.h" />
+    <ClInclude Include="src\Hazel\Layer.h" />
     <ClInclude Include="src\Hazel\Application.h" />
     <ClInclude Include="src\Hazel\Core.h" />
     <ClInclude Include="src\Hazel\EntryPoint.h" />
@@ -26,6 +28,8 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Hazel\LayerStack.cpp" />
+    <ClCompile Include="src\Hazel\Layer.cpp" />
     <ClCompile Include="src\Hazel\Application.cpp" />
     <ClCompile Include="src\Hazel\Log.cpp" />
     <ClCompile Include="src\hzpch.cpp">
@@ -86,6 +90,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\spdlog\include;$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,6 +110,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\spdlog\include;$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
