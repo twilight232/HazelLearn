@@ -3,7 +3,9 @@
 .git/
 bin/
 bin-int/
-HazelLearn/vendor/
+HazelLearn/vendor/spdlog/
+HazelLearn/vendor/OpenGL/
+
 
 
 # Files

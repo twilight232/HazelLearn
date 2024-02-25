@@ -3,7 +3,9 @@
 #include "Hazel/Events/EventAPI.h"
 #include "Log.h"
 
-#include <GLFW/glfw3.h>
+
+
+#include "../../Glad/include/glad/glad.h"
 
 
 
@@ -17,6 +19,9 @@ namespace Hazel {
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));   //BIND_EVENT_FN(OnEvent)本身是一个函数对象
+
+		GLuint id;
+		glGenVertexArrays(1, &id);
 
 	}
 	Application::~Application()
