@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src\Platform;$(SolutionDir)HazelLearn\src;$(SolutionDir)HazelLearn\vendor\spdlog\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src\Platform;$(SolutionDir)HazelLearn\src;$(SolutionDir)HazelLearn\vendor\imgui;$(SolutionDir)HazelLearn\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,7 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src\Platform;$(SolutionDir)HazelLearn\src;$(SolutionDir)HazelLearn\vendor\spdlog\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src\Platform;$(SolutionDir)HazelLearn\src;$(SolutionDir)HazelLearn\vendor\imgui;$(SolutionDir)HazelLearn\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

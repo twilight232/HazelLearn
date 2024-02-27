@@ -5,7 +5,8 @@ bin/
 bin-int/
 HazelLearn/vendor/spdlog/
 HazelLearn/vendor/OpenGL/
-
+HazelLearn/vendor/imgui/
+x64/
 
 
 # Files
