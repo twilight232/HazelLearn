@@ -25,6 +25,8 @@ namespace Hazel {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		inline virtual void* GetNativeWindow() const { return m_Window; }  
+
 		//没有覆写Create函数，那就是沿用基类的
 
 

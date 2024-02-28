@@ -33,7 +33,7 @@ namespace Hazel {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:
-		static Application* s_Instance;
+		static Application* s_Instance;  //静态实例，确保始终只有一个实例对象
 	
 
 

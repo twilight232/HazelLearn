@@ -72,6 +72,12 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>src\Hazel\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hazel\Input.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hazel\Application.cpp">
@@ -96,6 +102,9 @@
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>src\Hazel\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
   </ItemGroup>

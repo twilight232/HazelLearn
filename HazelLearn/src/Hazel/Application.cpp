@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Hazel/Events/EventAPI.h"
 #include "Log.h"
-
+#include "../Platform/Windows/WindowsInput.h"
 
 
 #include "../../Glad/include/glad/glad.h"
@@ -21,7 +21,7 @@ namespace Hazel {
 	Application::Application()
 	{
 		HZ_CORE_ASSERT(!s_Instance, "Application already exists!");  //如果s_Instance不为空指针，就终止程序
-		s_Instance = this;  //这是个静态成员，让它指向当前对象？  意思是每新建立一个Application对象，都会让s_Instance指向当前对象，配合HZ_CORE_ASSERT，确保整个程序中都只会有一个Application实例
+		s_Instance = this;  //这是个静态成员，让它指向当前对象  意思是每新建立一个Application对象，都会让s_Instance指向当前对象，配合HZ_CORE_ASSERT，确保整个程序中都只会有一个Application实例
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));   //BIND_EVENT_FN(OnEvent)本身是一个函数对象
@@ -62,6 +62,9 @@ namespace Hazel {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
+			std::pair<float, float> position = Input::GetMousePosition();
+			HZ_CORE_TRACE("{0},{1}", position.first, position.second);
+
 			m_Window->OnUpdate();
 		}
 
@@ -74,7 +77,7 @@ namespace Hazel {
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));    //当传入事件e==WindowCloseEvent时，dispatcher调用BIND_EVENT_FN(OnWindowClose)
 		//BIND_EVENT_FN(OnWindowClose)是一个函数对象，这个函数对象
 
-		//从后往前走的迭代器
+		//从后往前走的迭代器   发生事件后，调用每一个层的OnEvent函数
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
 		{
 			(*--it)->OnEvent(e);  //先--，再*
