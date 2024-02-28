@@ -13,7 +13,7 @@ namespace Hazel {
 	bool WindowsInput::IsKeyPressedImpl(int keycode)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-		auto state = glfwGetKey(window, keycode);
+		auto state = glfwGetKey(window, keycode);  //这个键盘值最终是用在SandboxApp的OnUpdate函数里面  表示这个键是否被按下返回Press或Release
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 	//鼠标是否按下

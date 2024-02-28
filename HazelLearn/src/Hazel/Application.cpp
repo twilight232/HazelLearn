@@ -62,9 +62,7 @@ namespace Hazel {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
-			std::pair<float, float> position = Input::GetMousePosition();
-			HZ_CORE_TRACE("{0},{1}", position.first, position.second);
-
+			
 			m_Window->OnUpdate();
 		}
 

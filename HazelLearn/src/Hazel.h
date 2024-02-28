@@ -10,9 +10,9 @@
 #include "Platform/Windows/WindowsWindow.h"
 #include "Hazel/ImGui/ImGuiLayer.h"
 
-
-
-
+#include "Hazel/Input.h"
+#include "Hazel/KeyCodes.h"
+#include "Hazel/MouseButtonCodes.h"
 
 //---------Entry Point----------------------------------
 
