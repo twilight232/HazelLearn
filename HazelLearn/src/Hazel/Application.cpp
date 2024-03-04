@@ -7,6 +7,8 @@
 
 #include "../../Glad/include/glad/glad.h"
 
+#include "glm/glm.hpp"
+#include "../vendor/imgui/imgui.h"
 
 
 namespace Hazel {
@@ -15,6 +17,7 @@ namespace Hazel {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)  //x是Application的成员函数，this是当前对象的指针，第三个是指成员函数传入参数的第一个
 	//感觉bind这个，说是绑定，其实是又加了层封装，用处确实有，可以调整函数的接口，控制传入参数数量和使用，让函数接口匹配
 
+	
 
 	Application* Application::s_Instance = nullptr;
 	
@@ -25,6 +28,9 @@ namespace Hazel {
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));   //BIND_EVENT_FN(OnEvent)本身是一个函数对象
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 
 		
 
@@ -60,7 +66,18 @@ namespace Hazel {
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate();  //目前只有IO轮询
+
+
+
+
+			m_ImGuiLayer->Begin();
+			
+
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();  
+
+			m_ImGuiLayer->End();
 
 			
 			m_Window->OnUpdate();

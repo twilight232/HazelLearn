@@ -66,7 +66,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>%(AdditionalLibraryDirectories);glfw3.lib;opengl32.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)HazelLearn\vendor\GLFW\lib;$(SolutionDir)HazelLearn\vendor\OpenGL\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -88,7 +88,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>%(AdditionalLibraryDirectories);glfw3.lib;opengl32.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)HazelLearn\vendor\GLFW\lib;$(SolutionDir)HazelLearn\vendor\OpenGL\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

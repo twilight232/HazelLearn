@@ -1,4 +1,5 @@
 #include <Hazel.h>
+#include "imgui.h"      //我以为会整合到Hazel.h里面，直接在应用端包含imgui吗？
 
 class ExampleLayer : public Hazel::Layer
 {
@@ -14,6 +15,14 @@ public:
 			HZ_TRACE("Tab key is pressed (poll)!");
 	}
 
+/*	virtual void OnImGuiRender() override
+	{
+		
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
+	*/
 	void OnEvent(Hazel::Event& event) override
 	{
 		//这里就算是客户端调用Hazel接口了
@@ -34,7 +43,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Hazel::ImGuiLayer());
+		//PushOverlay(new Hazel::ImGuiLayer());
 	}
 
 	~Sandbox()

@@ -16,7 +16,7 @@ int main(int argc,char** argv)
 	
 
 	
-	auto app = Hazel::CreateApplication();
+	auto app = Hazel::CreateApplication();  //调用的是Hazel空间下的CreateApplication函数
 	app->Run();
 	delete app;
 	return 0;
