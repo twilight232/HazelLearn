@@ -1,8 +1,9 @@
 #include "hzpch.h"
 #include "WindowsWindow.h"
-#include "Hazel.h"
+#include "../../HazelLearn/src/Hazel/Events/EventAPI.h"
 
-#include "../../Glad/include/glad/glad.h"
+#include "Platform/OpenGL/OpenGLContext.h"
+
 
 
 namespace Hazel {
@@ -52,10 +53,8 @@ namespace Hazel {
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);  //看了一下glfw3里面这个函数的实现，合情合理啊
-		glfwMakeContextCurrent(m_Window);  //将当前OpenGL上下文设置位指定窗口的上下文，让OpenGL后续的渲染操作在该窗口上下文执行
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);  //glfwGetProcAddress返回的是一个 传入void，返回void的函数指针，GLADloadproc是传入一个const char*，返回void*的函数指针
-		//gladLoadGLLoader 用来加载OpenGL 函数指针
-		HZ_CORE_ASSERT(status, "Failed to initialize Glad!");  //Glad初始化失败就中断程序，并报错    也就是加载函数指针出错了
+		m_Context = new OpenGLContext(m_Window);  //绑定当前窗口作为上下文对象   其实内部还是用glad在做，做了一层封装
+		m_Context->Init();
 		glfwSetWindowUserPointer(m_Window, &m_Data);  //让&m_Data成为m_Window指向窗口的用户指针，可以通过glfwGetWindowUserPointer来获得窗口用户指针&m_Data
 		SetVSync(true);
 
@@ -176,7 +175,7 @@ namespace Hazel {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();  //处理窗口和输入事件，并触发对应回调函数
-		glfwSwapBuffers(m_Window);  //交换前后缓冲区，更新图像
+		m_Context->SwapBuffers();
 	}
 
 	//设置垂直同步

@@ -62,8 +62,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>imgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\Debug-x64\imgui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>imgui.lib;HazelLearn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\Debug-x64\HazelLearn;$(SolutionDir)bin\Debug-x64\imgui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -72,7 +72,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src\Platform;$(SolutionDir)HazelLearn\src;$(SolutionDir)HazelLearn\vendor\imgui;$(SolutionDir)HazelLearn\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -81,8 +81,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>imgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\Debug-x64\imgui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>imgui.lib;HazelLearn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\Release-x64\HazelLearn;$(SolutionDir)bin\Release-x64\imgui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

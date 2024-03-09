@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Hazel/Window.h"
+#include "../../Hazel/Render/GraphicsContext.h"
 
 #include "../vendor/GLFW/glfw3.h"
 
@@ -39,9 +40,12 @@ namespace Hazel {
 
 
 
+
+
 	private:
 
 		GLFWwindow* m_Window;  //这个指针指向一个GLFW窗口对象
+		GraphicsContext* m_Context;  //指向一个图形上下文对象
 		//窗口基本数据
 		struct WindowData
 		{

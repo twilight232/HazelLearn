@@ -15,14 +15,14 @@ public:
 			HZ_TRACE("Tab key is pressed (poll)!");
 	}
 
-/*	virtual void OnImGuiRender() override
+	virtual void OnImGuiRender() override
 	{
 		
 		ImGui::Begin("Test");
 		ImGui::Text("Hello World");
 		ImGui::End();
 	}
-	*/
+	
 	void OnEvent(Hazel::Event& event) override
 	{
 		//这里就算是客户端调用Hazel接口了

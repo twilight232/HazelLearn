@@ -40,10 +40,10 @@ namespace Hazel {
 
 	}
 	//这个是为了过dll生成这一关，其实这个函数是不会被使用的，使用的依旧是SandboxApp里实现的CreateApplication() 
-	Hazel::Application* Hazel::CreateApplication()          //没有中间那个Application时这里一直报错，说Hazel命名空间下没有CreateApplication()
+	/*Hazel::Application* Hazel::CreateApplication()          //没有中间那个Application时这里一直报错，说Hazel命名空间下没有CreateApplication()
 	{
 		return new Application();             
-	}
+	}*/
 
 	void Application::PushLayer(Layer* layer)
 	{

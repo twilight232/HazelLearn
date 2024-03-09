@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Hazel\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Hazel\Input.h" />
     <ClInclude Include="src\Hazel\KeyCodes.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="src\Hazel.h" />
     <ClInclude Include="src\Hazel\Log.h" />
     <ClInclude Include="src\Hazel\MouseButtonCodes.h" />
+    <ClInclude Include="src\Hazel\Render\GraphicsContext.h" />
     <ClInclude Include="src\Hazel\Window.h" />
     <ClInclude Include="src\hzpch.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -34,6 +36,7 @@
     <ClInclude Include="vendor\OpenGL\includes\GL\glew.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Hazel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Hazel\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Hazel\LayerStack.cpp" />
@@ -66,13 +69,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -128,7 +131,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)HazelLearn\vendor\glm\glm;$(SolutionDir)HazelLearn\vendor\GLFW;$(SolutionDir)HazelLearn\vendor\imgui;$(SolutionDir)HazelLearn\vendor\spdlog\include;$(SolutionDir)HazelLearn\vendor\OpenGL\includes;$(SolutionDir)HazelLearn\src</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>hzpch.h</PrecompiledHeaderFile>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
