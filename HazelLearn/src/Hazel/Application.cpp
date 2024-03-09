@@ -32,6 +32,39 @@ namespace Hazel {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
+
+		//OpenGL绘制三角形，倒也没什么特殊的，蛮熟悉的
+		glGenVertexArrays(1, &m_VertexArray); //VAO  顶点数组对象
+		glBindVertexArray(m_VertexArray);
+
+		glGenBuffers(1, &m_VertexBuffer);   //VBO   顶点缓冲对象   但这里只是生成一个缓冲区
+		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);//此时选择VBO代表的缓冲区作为GL_ARRAY_BUFFER，顶点缓冲区     这里指明是顶点缓冲区，VBo才算生成完毕
+
+		float vertices[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.0f,  0.5f, 0.0f
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //将内存的数据传输到显存中，显存中的缓冲中，这里是进入顶点缓冲区
+
+		glEnableVertexAttribArray(0); //启用索引为0的顶点数组对象，其实就是第一个顶点数组对象。目前就一个顶点数组对象
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr); // 设置顶点属性指针，这个数据是这么读的。 
+		//第一个0和顶点数组对应，它代表我们读哪一个顶点数组，这里是让我们读第一个顶点数组
+		//第二个参数指明一个属性是由几个变量组成，这里是vec3
+		//第三个参数指明是float，那就是vec3f
+		//第四个参数是表示是否标准化，如果设置GL_TURE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。
+		//第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。**由于下个组位置数据在3个`float`之后**，我们把步长设置为`3 * sizeof(float)`。    并不是所有数据都是紧密排列的
+		// 第六个参数，它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是nullptr。
+		
+
+
+		glGenBuffers(1, &m_IndexBuffer);  
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer); //EBO
+
+		unsigned int indices[3] = { 0, 1, 2 };
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 		
 
 	}
@@ -63,8 +96,11 @@ namespace Hazel {
 	{
 		while (m_Running)
 		{
-			glClearColor(1, 0, 1, 1);
+			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+			glBindVertexArray(m_VertexArray);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();  //目前只有IO轮询
 
