@@ -90,6 +90,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Hazel\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hazel\Render\Shader.h">
+      <Filter>src\Hazel\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Hazel\Application.cpp">
@@ -120,6 +123,9 @@
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Hazel\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hazel\Render\Shader.cpp">
       <Filter>src\Hazel\源文件</Filter>
     </ClCompile>
   </ItemGroup>
