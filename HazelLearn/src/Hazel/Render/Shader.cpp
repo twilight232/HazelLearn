@@ -8,22 +8,22 @@ namespace Hazel {
 	Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
 		// Create an empty vertex shader handle
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER); //创建顶点Shader句柄
+		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER); //创建顶点Shader唯一标识符
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
 		const GLchar* source = vertexSrc.c_str();//读取Shader源代码
-		glShaderSource(vertexShader, 1, &source, 0);//绑定顶点Shader
+		glShaderSource(vertexShader, 1, &source, nullptr);//绑定顶点Shader
 
 		// Compile the vertex shader
 		glCompileShader(vertexShader);
 
 		GLint isCompiled = 0;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled); //获取是否编译成功
 		if (isCompiled == GL_FALSE)
 		{
 			GLint maxLength = 0;
-			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);  //获取着色器信息日志
 
 			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
@@ -43,7 +43,7 @@ namespace Hazel {
 		// Send the fragment shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
 		source = fragmentSrc.c_str();
-		glShaderSource(fragmentShader, 1, &source, 0);
+		glShaderSource(fragmentShader, 1, &source, nullptr);
 
 		// Compile the fragment shader
 		glCompileShader(fragmentShader);
@@ -71,7 +71,7 @@ namespace Hazel {
 		// Vertex and fragment shaders are successfully compiled.
 		// Now time to link them together into a program.
 		// Get a program object.
-		m_RendererID = glCreateProgram();  //一个ShaderProgram，链接顶点Shader和像素Shader后的产物
+		m_RendererID = glCreateProgram();  //一个ShaderProgram，链接顶点Shader和像素Shader后的产物  倒不如说，ShaderProgram才是最后Shader运行的作用对象，它可以选择性的添加自己想要的Shader
 		GLuint program = m_RendererID;
 
 		// Attach our shaders to our program

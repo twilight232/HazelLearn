@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Hazel\Render\Buffer.h" />
+    <ClInclude Include="src\Hazel\Render\Render.h" />
     <ClInclude Include="src\Hazel\Render\Shader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Hazel\ImGui\ImGuiLayer.h" />
@@ -37,6 +40,9 @@
     <ClInclude Include="vendor\OpenGL\includes\GL\glew.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Hazel\Render\Buffer.cpp" />
+    <ClCompile Include="src\Hazel\Render\Render.cpp" />
     <ClCompile Include="src\Hazel\Render\Shader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Hazel\ImGui\ImGuiBuild.cpp" />
