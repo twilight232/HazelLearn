@@ -13,13 +13,34 @@
 
 
 
+
 namespace Hazel {
 
 	//绑定事件
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)  //x是Application的成员函数，this是当前对象的指针，第三个是指成员函数传入参数的第一个
 	//感觉bind这个，说是绑定，其实是又加了层封装，用处确实有，可以调整函数的接口，控制传入参数数量和使用，让函数接口匹配
 
-	
+	//一个Hazel空间下的函数
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case Hazel::ShaderDataType::Float:    return GL_FLOAT;
+		case Hazel::ShaderDataType::Float2:   return GL_FLOAT;
+		case Hazel::ShaderDataType::Float3:   return GL_FLOAT;
+		case Hazel::ShaderDataType::Float4:   return GL_FLOAT;
+		case Hazel::ShaderDataType::Mat3:     return GL_FLOAT;
+		case Hazel::ShaderDataType::Mat4:     return GL_FLOAT;
+		case Hazel::ShaderDataType::Int:      return GL_INT;
+		case Hazel::ShaderDataType::Int2:     return GL_INT;
+		case Hazel::ShaderDataType::Int3:     return GL_INT;
+		case Hazel::ShaderDataType::Int4:     return GL_INT;
+		case Hazel::ShaderDataType::Bool:     return GL_BOOL;
+		}
+
+		HZ_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
 
 	Application* Application::s_Instance = nullptr;
 	
@@ -35,35 +56,46 @@ namespace Hazel {
 		PushOverlay(m_ImGuiLayer);
 
 
-		//OpenGL绘制三角形，倒也没什么特殊的，蛮熟悉的
+		
 		glGenVertexArrays(1, &m_VertexArray); //VAO  顶点数组对象
 		glBindVertexArray(m_VertexArray);
 
 		
 
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));  //生成一个VBO
+		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));  //生成一个VBO，数据已经传入缓冲区
+
+		{ //这个花括号是单独弄出一个作用域， 为了让这个layout用完就销毁
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" },  //单提出来是调用了BufferElement的构造函数，这种传参就算默认调用构造函数
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+
+			m_VertexBuffer->SetLayout(layout);  //设置layout，以后就按照layout读取缓冲区数据
+
+		}
 
 
 
-
-		glEnableVertexAttribArray(0); //启用索引为0的顶点数组对象，其实就是第一个顶点数组对象。目前就一个顶点数组对象
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr); // 设置顶点属性指针，这个数据是这么读的。 
-		//第一个0是和顶点着色器对应的，这里对应location=0
-		//第二个参数指明一个属性是由几个变量组成，这里是vec3
-		//第三个参数指明是float，那就是vec3f
-		//第四个参数是表示是否标准化，如果设置GL_TURE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。
-		//第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。**由于下个组位置数据在3个`float`之后**，我们把步长设置为`3 * sizeof(float)`。    并不是所有数据都是紧密排列的
-		// 第六个参数，它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是nullptr。
-		
-
-
-		
-
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout(); //这个常量引用有点意思，
+		//GetLayout返回的是OpenGLVertexBuffer对象的m_Layout，引用的话可以让外面这个layout直接操作对象里面的m_Layout，这样不安全，就加了个const
+		//其实不用引用是可以的，但那样就要复制一个对象了，如果对象很大的话，就会影响内存和性能了
+		for (const auto& element : layout.GetElements())   //之前是直接遍历layout，其实也就是默认区遍历m_Elements,,但我的m_Elements是设置为Private的，for循环能直接遍历？ 因为我定义了一个可以访问到m_Elements的Public函数，for循环会自己去调用它吧v
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index,       
+				element.GetComponentCount(),
+				ShaderDataTypeToOpenGLBaseType(element.Type),
+				element.Normalized ? GL_TRUE : GL_FALSE,
+				layout.GetStride(),
+				(const void*)element.Offset);
+			index++;//layout是std::vector<BufferElement> m_Elements;  其中element是各不相同的，是BufferElement，可以有多种类型的,确实是对应了Shader中的layout序号
+		}
 		uint32_t indices[3] = { 0, 1, 2 };
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t))); //生成EBO
 		//给OpenGL做了一层封装，但就目前而言，渲染的实现还是基于OpenGL的思路，这是不够的，我们最终是要做到上面给数据，下面随便OpenGL还是什么渲染API实现
@@ -133,18 +165,16 @@ namespace Hazel {
 			glBindVertexArray(m_VertexArray);
 			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
+			//轮询不同层发生的事件
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();  //目前只有IO轮询
 
 
 
-
+			//渲染ImGui
 			m_ImGuiLayer->Begin();
-			
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();  
-
 			m_ImGuiLayer->End();
 
 			
