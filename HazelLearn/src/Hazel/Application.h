@@ -9,6 +9,7 @@
 #include "Hazel/ImGui/ImGuiLayer.h"
 #include "../../HazelLearn/src/Hazel/Render/Shader.h"
 #include "../../HazelLearn/src/Hazel/Render/Buffer.h"
+#include "../../HazelLearn/src/Hazel/Render/VertexArray.h"
 
 
 namespace Hazel {
@@ -38,13 +39,14 @@ namespace Hazel {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-		unsigned int m_VertexArray;//VAO
 
 
-		std::unique_ptr<Shader> m_Shader;  
-		std::unique_ptr<VertexBuffer> m_VertexBuffer; //VBO
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;  //EBO
 
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;//VAO
+
+		std::shared_ptr<Shader> m_BlueShader;
+		std::shared_ptr<VertexArray> m_SquareVA;//VAO
 
 	private:
 		static Application* s_Instance;  //静态实例，确保始终只有一个实例对象

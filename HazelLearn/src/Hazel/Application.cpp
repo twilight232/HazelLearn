@@ -7,7 +7,7 @@
 
 #include "../../Glad/include/glad/glad.h"
 
-#include "glm/glm.hpp"
+#include "glm.hpp"
 #include "../vendor/imgui/imgui.h"
 
 
@@ -20,27 +20,7 @@ namespace Hazel {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)  //x是Application的成员函数，this是当前对象的指针，第三个是指成员函数传入参数的第一个
 	//感觉bind这个，说是绑定，其实是又加了层封装，用处确实有，可以调整函数的接口，控制传入参数数量和使用，让函数接口匹配
 
-	//一个Hazel空间下的函数
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-		case Hazel::ShaderDataType::Float:    return GL_FLOAT;
-		case Hazel::ShaderDataType::Float2:   return GL_FLOAT;
-		case Hazel::ShaderDataType::Float3:   return GL_FLOAT;
-		case Hazel::ShaderDataType::Float4:   return GL_FLOAT;
-		case Hazel::ShaderDataType::Mat3:     return GL_FLOAT;
-		case Hazel::ShaderDataType::Mat4:     return GL_FLOAT;
-		case Hazel::ShaderDataType::Int:      return GL_INT;
-		case Hazel::ShaderDataType::Int2:     return GL_INT;
-		case Hazel::ShaderDataType::Int3:     return GL_INT;
-		case Hazel::ShaderDataType::Int4:     return GL_INT;
-		case Hazel::ShaderDataType::Bool:     return GL_BOOL;
-		}
-
-		HZ_CORE_ASSERT(false, "Unknown ShaderDataType!");
-		return 0;
-	}
+	
 
 	Application* Application::s_Instance = nullptr;
 	
@@ -56,49 +36,55 @@ namespace Hazel {
 		PushOverlay(m_ImGuiLayer);
 
 
-		
-		glGenVertexArrays(1, &m_VertexArray); //VAO  顶点数组对象
-		glBindVertexArray(m_VertexArray);
-
-		
+		//渲染开始
+		m_VertexArray.reset(VertexArray::Create());//生成一个VAO，
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));  //生成一个VBO，数据已经传入缓冲区
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));  //生成一个VBO对象，数据已经传入缓冲区
 
-		{ //这个花括号是单独弄出一个作用域， 为了让这个layout用完就销毁
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "a_Position" },  //单提出来是调用了BufferElement的构造函数，这种传参就算默认调用构造函数
-				{ ShaderDataType::Float4, "a_Color" }
-			};
+		
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },  //单提出来是调用了BufferElement的构造函数，这种传参就算默认调用构造函数
+			{ ShaderDataType::Float4, "a_Color" }
+		};
 
-			m_VertexBuffer->SetLayout(layout);  //设置layout，以后就按照layout读取缓冲区数据
+		vertexBuffer->SetLayout(layout);  //设置layout，以后就按照layout读取缓冲区数据
+		m_VertexArray->AddVertexBuffer(vertexBuffer); //VAO添加对VBO的引用
 
-		}
-
-
-
-		uint32_t index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout(); //这个常量引用有点意思，
-		//GetLayout返回的是OpenGLVertexBuffer对象的m_Layout，引用的话可以让外面这个layout直接操作对象里面的m_Layout，这样不安全，就加了个const
-		//其实不用引用是可以的，但那样就要复制一个对象了，如果对象很大的话，就会影响内存和性能了
-		for (const auto& element : layout.GetElements())   //之前是直接遍历layout，其实也就是默认区遍历m_Elements,,但我的m_Elements是设置为Private的，for循环能直接遍历？ 因为我定义了一个可以访问到m_Elements的Public函数，for循环会自己去调用它吧v
-		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,       
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*)element.Offset);
-			index++;//layout是std::vector<BufferElement> m_Elements;  其中element是各不相同的，是BufferElement，可以有多种类型的,确实是对应了Shader中的layout序号
-		}
+		
 		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t))); //生成EBO
-		//给OpenGL做了一层封装，但就目前而言，渲染的实现还是基于OpenGL的思路，这是不够的，我们最终是要做到上面给数据，下面随便OpenGL还是什么渲染API实现
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t))); //创建EBO
+		m_VertexArray->SetIndexBuffer(indexBuffer);  //VAO添加对EBO的引用
+
+
+
+		m_SquareVA.reset(VertexArray::Create()); //生成一个VAO
+		float squareVertices[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB;
+		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));  //生成一个VBO
+		squareVB->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" }
+			});
+		m_SquareVA->AddVertexBuffer(squareVB); //VAO添加对VBO的引用，此时VAO会换绑，换成m_SquareVA这个VAO
+
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIB;
+		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t))); 
+		m_SquareVA->SetIndexBuffer(squareIB); //VAO添加对EBO的引用
+
 
 
 		//人工制作Shader，本来应该是读取Shader文件的，先凑合吧
@@ -128,9 +114,41 @@ namespace Hazel {
 
 		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
 
+
+		std::string blueShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string blueShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+
+			void main()
+			{
+				color = vec4(0.2, 0.3, 0.8, 1.0);
+			}
+		)";
+
+		m_BlueShader.reset(new Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+
 		
 
 	}
+
+
 	Application::~Application()
 	{
 
@@ -161,9 +179,15 @@ namespace Hazel {
 		{
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			m_BlueShader->Bind();
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+
 			m_Shader->Bind();
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			m_VertexArray->Bind();
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			//轮询不同层发生的事件
 			for (Layer* layer : m_LayerStack)
@@ -172,10 +196,10 @@ namespace Hazel {
 
 
 			//渲染ImGui
-			m_ImGuiLayer->Begin();
+			/*m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();  
-			m_ImGuiLayer->End();
+			m_ImGuiLayer->End();*/
 
 			
 			m_Window->OnUpdate();

@@ -3,10 +3,7 @@
 .git/
 bin/
 bin-int/
-HazelLearn/vendor/spdlog/
-HazelLearn/vendor/OpenGL/
-HazelLearn/vendor/imgui/
-HazelLearn/vendor/glm/
+
 
 
 # Files
